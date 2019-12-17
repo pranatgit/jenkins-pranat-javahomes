@@ -9,4 +9,7 @@ node {
     stage ('Maven Build'){
         sh label: '', script: "${mvnHome}/bin/mvn clean package"
     }
+    stage ('Deploy dev'){
+        echo "Deploy to prod - comming soon"
+    }
 }
