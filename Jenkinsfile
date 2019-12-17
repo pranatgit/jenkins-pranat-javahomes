@@ -16,7 +16,7 @@ pipeline {
                sh "mvn clean package"
             }
         }
-        stage {
+        stage ('Deploy dev') {
             steps {
                 sshagent(['tomcat-dev']) {
                      // stop tomcat
