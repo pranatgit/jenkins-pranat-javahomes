@@ -43,5 +43,19 @@ pipeline {
             subject: 'successfully deployed', 
             to: 'pranatmund5@gmail.com'
         }
-    }
+        
+        failure {
+           mail bcc: '',
+            body: """ Hi Team, The app is failed to deployed ${BUILD_URL}
+            
+            Thanks,
+            DevOps Team,
+            Java Homes """ , 
+            cc: '', 
+            from: '', 
+            replyTo: '', 
+            subject: "${JOB_NAME} - deployment failed", 
+            to: 'pranatmund5@gmail.com'
+        }
+    }  
 }
