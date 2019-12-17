@@ -9,6 +9,7 @@ pipeline {
             steps {
                sh "mvn clean package"
             }
+        }
         
 
         stage ('Deploy - dev'){
