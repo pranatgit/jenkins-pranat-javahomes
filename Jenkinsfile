@@ -12,9 +12,28 @@ pipeline {
         }
 
         stage ('Deploy - dev'){
-            steps {
-                echo "deploy to dev environment"
-            }
+           when {
+               branch 'develop'
+           }
+           steps {
+               echo "deploy to dev server"
+           }
+        }
+        stage ('Deploy - uat'){
+           when {
+               branch 'staging'
+           }
+           steps {
+               echo "deploy to uat server"
+           }
+        }
+        stage ('Deploy - prod'){
+           when {
+               branch 'master'
+           }
+           steps {
+               echo "deploy to production server"
+           }
         }
     }   
 }
