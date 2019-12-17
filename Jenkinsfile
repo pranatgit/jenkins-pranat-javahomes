@@ -31,7 +31,13 @@ pipeline {
     }
     post {
         success {
-            echo "successs email sent"
+            mail bcc: '',
+            body: 'successfully deployed jenkins', 
+            cc: '', 
+            from: '', 
+            replyTo: '', 
+            subject: 'successfully deployed', 
+            to: 'pranatmund5@gmail.com'
         }
     }
 }
