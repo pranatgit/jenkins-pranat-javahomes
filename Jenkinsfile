@@ -7,6 +7,7 @@ pipeline {
         trim: false
     }
 
+    
     stages {
         stage ('SCM Checkout'){
             steps {
