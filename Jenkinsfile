@@ -1,15 +1,32 @@
-node {
-    // it will give the maven location
-    def mvnHome = tool name: 'maven3', type: 'maven'
-    stage ('SCM checkout'){
-        git credentialsId: 'git-1',
-        url: 'https://github.com/pranatgit/jenkins-pranat-javahomes',
-        branch: 'master'
+pipeline {
+    agent any
+    environment {
+        PATH = "${PATH}:{tool name: 'maven3', type: 'maven'}/bin"
     }
-    stage ('Maven Build'){
-        sh label: '', script: "${mvnHome}/bin/mvn clean package"
-    }
-    stage ('Deploy dev'){
-        echo "Deploy to prod - comming soon"
+    stages {
+        stage ('SCM Checkout'){
+            steps {
+                git credentialsId: 'git-1',
+                url: 'https://github.com/pranatgit/jenkins-pranat-javahomes',
+                branch: 'master'
+            }
+        }
+        stage ('Maven Build'){
+            steps {
+               sh "mvn clean package"
+            }
+        }
+        stage {
+            steps {
+                sshagent(['tomcat-dev']) {
+                     // stop tomcat
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@18.224.94.59 /opt/tomcat8/bin/shutdown.sh"
+                    // copy war file to remote tomcat
+                    sh "scp target/6pmwebapp.war  ec2-user@18.224.94.59:/opt/tomcat8/webapps/"
+                    // start tomcat
+                     sh "ssh ec2-user@18.224.94.59 /opt/tomcat8/bin/startup.sh"
+                }
+            }
+        }
     }
 }
