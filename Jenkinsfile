@@ -32,7 +32,11 @@ pipeline {
     post {
         success {
             mail bcc: '',
-            body: 'successfully deployed jenkins', 
+            body: """ Hi Team, The app is successfully deployed ${BUILD_URL}
+            
+            Thanks,
+            DevOps Team,
+            Java Homes """ , 
             cc: '', 
             from: '', 
             replyTo: '', 
