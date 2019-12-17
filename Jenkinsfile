@@ -29,4 +29,9 @@ pipeline {
             }
         }
     }
+    post {
+        success {
+            echo "successs email sent"
+        }
+    }
 }
